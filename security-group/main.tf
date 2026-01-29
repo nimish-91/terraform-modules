@@ -1,5 +1,5 @@
 resource "aws_security_group" "this" {
-  name   = "${var.project_name}-sg"
+  name   = "sg"
   vpc_id = var.vpc_id
 
   ingress {

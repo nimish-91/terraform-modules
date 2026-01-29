@@ -13,12 +13,3 @@ variable "private_subnet_cidr" {
 variable "az" {
   type = string
 }
-
-variable "project_name" {
-  type = string
-}
-
-variable "environment" {
-  type    = string
-  default = "dev"
-}
