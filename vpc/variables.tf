@@ -1,5 +1,24 @@
-variable "vpc_cidr" {}
-variable "public_subnet_cidr" {}
-variable "private_subnet_cidr" {}
-variable "az" {}
-variable "project_name" {}
+variable "vpc_cidr" {
+  type = string
+}
+
+variable "public_subnet_cidr" {
+  type = string
+}
+
+variable "private_subnet_cidr" {
+  type = string
+}
+
+variable "az" {
+  type = string
+}
+
+variable "project_name" {
+  type = string
+}
+
+variable "environment" {
+  type    = string
+  default = "dev"
+}

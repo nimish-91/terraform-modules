@@ -4,7 +4,7 @@ resource "aws_vpc" "this" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.project_name}-vpc"
+    Name = "${var.project_name}-Myvpc"
   }
 }
 
@@ -13,25 +13,53 @@ resource "aws_subnet" "public" {
   cidr_block              = var.public_subnet_cidr
   availability_zone       = var.az
   map_public_ip_on_launch = true
+
+  tags = {
+    Name        = "${var.project_name}-public-subnet"
+    Type        = "public"
+    Environment = var.environment
+  }
 }
 
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = var.private_subnet_cidr
   availability_zone = var.az
+
+  tags = {
+    Name        = "${var.project_name}-public-subnet"
+    Type        = "public"
+    Environment = var.environment
+  }
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.this.id
+  
+  tags = {
+    Name        = "${var.project_name}-Myvpcigw"
+    Environment = var.environment
+  }
 }
 
 resource "aws_eip" "nat" {
   domain = "vpc"
+  
+  tags = {
+    Name        = "${var.project_name}-nat-eip"
+    Environment = var.environment
+  }
 }
 
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public.id
+  
+  tags = {
+    Name        = "${var.project_name}-nat-gateway"
+    Environment = var.environment
+  }
+
 }
 
 resource "aws_route_table" "public" {
@@ -41,6 +69,11 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
+  
+   tags = {
+    Name        = "${var.project_name}-public-rt"
+    Environment = var.environment
+  }
 }
 
 resource "aws_route_table" "private" {
@@ -49,6 +82,11 @@ resource "aws_route_table" "private" {
   route {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat.id
+  }
+  
+  tags = {
+    Name        = "${var.project_name}-private-rt"
+    Environment = var.environment
   }
 }
 
