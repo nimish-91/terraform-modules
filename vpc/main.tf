@@ -26,8 +26,8 @@ resource "aws_subnet" "private" {
   availability_zone = var.az
 
   tags = {
-    Name        = "public-subnet"
-    Type        = "public"
+    Name        = "private-subnet"
+    Type        = "private"
    }
 }
 
@@ -35,7 +35,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.this.id
   
   tags = {
-    Name        = "Myvpcigw"
+    Name        = "Myvpc-igw"
   }
 }
 
@@ -43,7 +43,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
   
   tags = {
-    Name        = "nat-eip"
+    Name        = "Myvpc-nat-eip"
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public.id
   
   tags = {
-    Name        = "nat-gateway"
+    Name        = "Myvpc-nat-gateway"
   }
 
 }
