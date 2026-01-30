@@ -3,11 +3,6 @@ variable "public_subnet_id" {
   type        = string
 }
 
-variable "private_subnet_id" {
-  description = "Private subnet ID"
-  type        = string
-}
-
 variable "sg_id" {
   description = "Security group ID"
   type        = string
@@ -20,10 +15,5 @@ variable "instance_type" {
 
 variable "linux_ami" {
   description = "Linux AMI ID"
-  type        = string
-}
-
-variable "windows_ami" {
-  description = "Windows AMI ID"
   type        = string
 }
